@@ -1,0 +1,14 @@
+keytool -genkeypair -alias server -keyalg RSA -dname "cn=localhost" -keypass storepass -keystore trust_store.jks -storepass storepass
+
+keytool -genkeypair -alias client -keyalg RSA -dname "cn=localhost" -keypass storepass -keystore key_store.jks -storepass storepass
+
+keytool -exportcert -alias client -file client_key.rsa -keystore key_store.jks -storepass storepass
+
+keytool -importcert -alias client -file client_key.rsa -keystore trust_store.jks -storepass storepass -noprompt
+
+keytool -exportcert -alias server -file server_key.rsa -keystore trust_store.jks -storepass storepass
+
+keytool -importcert -alias server -file server_key.rsa -keystore key_store.jks -storepass storepass -noprompt
+
+keytool -list -v -keystore trust_store.jks -storepass storepass
+keytool -list -v -keystore key_store.jks -storepass storepass
